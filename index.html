@@ -253,11 +253,11 @@
     }
 
     /* Different colors for each skill */
-    .progress-bar.web { width: 85%; background: #00c9ff; }
-    .progress-bar.linux { width: 80%; background: #e63946; }
-    .progress-bar.ad { width: 75%; background: #ff7f11; }
+    .progress-bar.web { width: 60%; background: #00c9ff; }
+    .progress-bar.linux { width: 60%; background: #e63946; }
+    .progress-bar.ad { width: 40%; background: #ff7f11; }
     .progress-bar.python { width: 40%; background: #2a9d8f; }
-    .progress-bar.js { width: 65%; background: #f4a261; }
+    .progress-bar.js { width: 70%; background: #f4a261; }
 
     /* ---------- Projects ---------- */
     .projects {
@@ -326,12 +326,47 @@
     </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <h2>Hi, I'm Faria </h2>
-    <p>Jr. Pentester & Bug Hunter | Passionate about Web Security, Red Teaming, and Ethical Hacking.</p>
-    <a href="#experience" class="btn">Explore My Work</a>
-  </section>
+<!-- Hero -->
+<section class="hero">
+  <h2>Hi, I'm Faria </h2>
+  <p id="typing-text"></p>
+  <a href="#experience" class="btn">Explore My Work</a>
+</section>
+
+<script>
+const text = "Jr. Pentester & Bug Hunter | Passionate about Web Security, Red Teaming, and Ethical Hacking.";
+const typingElement = document.getElementById("typing-text");
+let index = 0;
+
+function typeEffect() {
+  if (index < text.length) {
+    typingElement.textContent += text.charAt(index);
+    index++;
+    setTimeout(typeEffect, 50); // typing speed (ms per letter)
+  } else {
+    // Remove the blinking cursor after typing is done
+    typingElement.classList.remove("cursor");
+  }
+}
+
+window.addEventListener("load", typeEffect);
+</script>
+
+<style>
+/* Blinking cursor effect */
+.cursor::after {
+  content: '|';
+  animation: blink 0.8s infinite;
+  margin-left: 4px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+</style>
+
+
 
   <!-- About -->
   <section id="about" class="about">
@@ -431,28 +466,28 @@
     <div class="skill">
       <p>Web Pentesting</p>
       <div class="progress">
-        <div class="progress-bar web">85%</div>
+        <div class="progress-bar web">60%</div>
       </div>
     </div>
 
     <div class="skill">
       <p>Linux</p>
       <div class="progress">
-        <div class="progress-bar linux">80%</div>
+        <div class="progress-bar linux">60%</div>
       </div>
     </div>
 
     <div class="skill">
       <p>Python & Scripting</p>
       <div class="progress">
-        <div class="progress-bar python">70%</div>
+        <div class="progress-bar python">40%</div>
       </div>
     </div>
 
     <div class="skill">
       <p>JavaScript / HTML / CSS</p>
       <div class="progress">
-        <div class="progress-bar js">65%</div>
+        <div class="progress-bar js">70%</div>
       </div>
     </div>
   </section>
@@ -475,31 +510,71 @@
 <!-- Projects -->
 <section id="projects" class="projects">
   <h3>Projects</h3>
-  <div class="projects" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+  <div class="projects" style="display: flex; justify-content: center; gap: 2rem;">
 
-    <!-- Example Project 1 -->
+  
+    <!-- Reconyx Tool -->
     <div class="project-card">
-      <h4>🔧 Custom Pentesting Tool</h4>
-      <p>Developed a Python script to automate vulnerability scanning for web applications.</p>
-      <p><a href="https://github.com/fariaahmed13/custom-pentest-tool" target="_blank">View on GitHub</a></p>
-    </div>
-
-    <!-- Example Project 2 -->
-    <div class="project-card">
-      <h4>🌐 Bug Bounty Report Examples</h4>
-      <p>Documentation and example reports for vulnerabilities found during practice on HackerOne and Bugcrowd.</p>
-      <p><a href="https://github.com/fariaahmed13/bug-bounty-reports" target="_blank">View on GitHub</a></p>
-    </div>
-
-    <!-- Example Project 3 -->
-    <div class="project-card">
-      <h4>💻 Web Automation Scripts</h4>
-      <p>Scripts built using Python & Selenium to automate repetitive web tasks and testing scenarios.</p>
-      <p><a href="https://github.com/fariaahmed13/web-automation-scripts" target="_blank">View on GitHub</a></p>
+      <h4>🕵️ Reconyx - Domain Recon Tool</h4>
+      <p>A fast & automated bash-based domain reconnaissance tool for subdomain enumeration, API key syncing, and live subdomain checking. Built for penetration testers and bug bounty hunters.</p>
+      <p><a href="https://github.com/fariaahmed13/Reconyx" target="_blank">View on GitHub</a></p>
     </div>
 
   </div>
 </section>
+
+<style>
+/* Centered project card */
+.project-card {
+  max-width: 500px;
+  background: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+}
+
+/* Scroll reveal (like education timeline) */
+.project-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-in-out;
+}
+.project-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+<script>
+// Grab project card
+const projectCards = document.querySelectorAll('.project-card');
+
+function revealOnScroll(elements) {
+  const triggerBottom = window.innerHeight * 0.85;
+
+  elements.forEach(el => {
+    const boxTop = el.getBoundingClientRect().top;
+    if (boxTop < triggerBottom) {
+      el.classList.add('visible');
+    }
+  });
+}
+
+function handleScroll() {
+  revealOnScroll(projectCards);
+}
+
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('load', handleScroll);
+</script>
+
+
 
 <!-- Contact -->
 <section id="contact" class="contact">
@@ -514,7 +589,7 @@
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 Faria Ahmed | Built with ❤️ & Hacker Vibes</p>
+    <p>© 2025 Faria Ahmed | Built with passion and precision</p>
   </footer>
 
   <!-- Scripts -->
